@@ -1,0 +1,12 @@
+---
+- name: Добавление репозиториев, скачивание обновления и загрузка 
+  hosts: giss
+  become: yes  # Используем привилегии root
+  vars: 
+    source_list_1: ""
+    source_list_2: ""
+    source_list_3: ""
+  
+  tasks:
+    - name: Добавление репозиториев
+      

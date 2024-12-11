@@ -1,0 +1,16 @@
+---
+- name: Добавление sudo прав пользователям
+  hosts: WI
+  become: true
+
+  vars:
+    users:
+      
+
+  tasks:
+  - name: Добавление sudo прав
+    user:
+      name: "{{ item }}"
+      groups: sudo
+      append: true
+    loop: "{{ users }}"
