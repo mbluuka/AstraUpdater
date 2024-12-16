@@ -1,0 +1,21 @@
+﻿---
+- name: Add Astra repositories and update system
+  hosts: all
+  become: true  # Выполнять задачи с правами root
+  tasks:
+    - name: Ensure Astra repository lines are present in /etc/apt/sources.list
+      lineinfile:
+        path: /etc/apt/sources.list
+        line: "{{ item }}"
+        state: present
+      with_items:
+        - "deb http://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.6/uu/1/repository-main/ 1.7_x86-64 main contrib non-free"
+        - "deb http://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.6/uu/1/repository-update/ 1.7_x86-64 main contrib non-free"
+        - "deb http://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.6/uu/1/repository-base/ 1.7_x86-64 main contrib non-free"
+
+    - name: Run apt update
+      apt:
+        update_cache: yes
+
+    - name: Run astra-update
+      command: astra-update -A -r -T
